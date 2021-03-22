@@ -1,10 +1,10 @@
 version: '3'
 services:
     dachs:
-        image: "dachs-server"
         container_name: dachs-server
-        # build:
-        #     context: ./dockerfiles/server_dachs
+        build:
+            context: ./dockerfiles/server_dachs
+        image: "dachs-server"
         tty: true
         network_mode: 'bridge'
         ports:
@@ -14,9 +14,9 @@ services:
         depends_on:
             - postgres
     postgres:
-        image: "dachs-postgres"
         container_name: dachs-postgres
-        # build:
-        #     context: ./dockerfiles/server_postgres
+        build:
+            context: ./dockerfiles/server_postgres
+        image: "dachs-postgres"
         tty: true
         network_mode: 'bridge'
