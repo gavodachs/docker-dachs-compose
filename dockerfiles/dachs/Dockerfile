@@ -55,9 +55,7 @@ RUN DEBIAN_FRONTEND='noninteractive'              && \
 #    && echo -e "#-#-#\nInstalled DaCHS version: ${PKG_VERSION}\n#-#-#"
 
 ENV GAVO_ROOT="/var/gavo"
-ENV GAVO_INPUTS="${GAVO_ROOT}/inputs"
-ENV GAVO_SETTINGS="/etc/gavo.rc"
-ENV GAVOSETTINGS="$GAVO_SETTINGS"
+ENV GAVOSETTINGS="/etc/gavo.rc"
 
 COPY etc/gavo.rc "$GAVOSETTINGS"
 

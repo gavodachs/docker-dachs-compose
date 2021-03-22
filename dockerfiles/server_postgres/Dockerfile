@@ -7,9 +7,9 @@ LABEL Description=DaCHS\ is\ a\ publishing\ infrastructure\ for\ the\ Virtual\ O
 
 MAINTAINER "Carlos Brandt <carloshenriquebrandt at gmail>"
 
+# BUILD-time arguments; to use a different version of Postgers
 ARG PG_VERSION=11
 ENV PG_VERSION=${PG_VERSION}
-
 
 RUN DEBIAN_FRONTEND='noninteractive'                    && \
     apt-get update                                      && \

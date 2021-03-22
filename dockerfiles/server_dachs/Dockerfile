@@ -1,4 +1,5 @@
-FROM debian:buster
+ARG DEBIAN_IMAGE="buster"
+FROM "debian:$DEBIAN_IMAGE"
 
 LABEL Description=DaCHS\ is\ a\ publishing\ infrastructure\ for\ the\ Virtual\ Observatory. \
       Author=Markus\ Demleitner \
@@ -11,36 +12,40 @@ MAINTAINER "Carlos Brandt <carloshenriquebrandt at gmail>"
 # `docker build --build-arg APT_REPO=beta .`
 ARG APT_REPO="release"
 
-# Same for PostgreSQL-q3c plugin (consequently, PSQL db altogether)
+# Postgres is needed here because of PostgreSQL-q3c plugin
 ARG PG_VERSION=11
 ENV PG_VERSION=${PG_VERSION}
 
-RUN DEBIAN_FRONTEND='noninteractive'                    && \
-    apt-get update                                      && \
-    apt-get install -y wget vim locales gnupg2          && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN DEBIAN_FRONTEND='noninteractive' \
+    && apt-get update \
+    && apt-get install -y \
+      curl \
+      git \
+      gnupg2 \
+      locales \
+      sudo \
+      vim \
+      wget \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ENV LANG=C.UTF-8
-RUN echo LANG="$LANG" > /etc/default/locale
+# This is the brute-force solution for Debian;
+# I am having problems in set locales non-interactively,
+# and since I really need the "C/UTF8" for postgres, will just set it for all.
+ENV LC_ALL=C.UTF-8
+RUN echo LC_ALL="$LC_ALL" > /etc/default/locale
 
 RUN echo "deb http://vo.ari.uni-heidelberg.de/debian ${APT_REPO} main" \
         > /etc/apt/sources.list.d/gavo.list                         && \
     wget -qO - http://docs.g-vo.org/archive-key.asc | apt-key add -
 
-# Default is the Python-3 packages under Dachs-2.
-# If you want Dachs-1 Python(2) library, use 'python-gavodachs' instead
-ENV PKG_NAME="python3-gavo"
-
-RUN DEBIAN_FRONTEND='noninteractive'                                  && \
-    apt-get update                                                    && \
-    apt-get install -y ${PKG_NAME} postgresql-${PG_VERSION}-q3c  && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* && \
-    apt-get upgrade -y ${PKG_NAME}
-
+RUN DEBIAN_FRONTEND='noninteractive'                  && \
+    apt-get update                                    && \
+    apt-get install -y python3-gavo                   && \
+    apt-get install -y postgresql-$PG_VERSION-q3c     && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ENV GAVO_ROOT="/var/gavo"
-ENV GAVO_INPUTS="${GAVO_ROOT}/inputs"
-ENV GAVO_SETTINGS="/etc/gavo.rc"
+ENV GAVOSETTINGS="/etc/gavo.rc"
 
 RUN addgroup --system gavo                                          && \
     adduser --system --ingroup gavo gavo                            && \
@@ -50,7 +55,7 @@ RUN addgroup --system gavo                                          && \
     mkdir -m 775 "${GAVO_ROOT}"                                     && \
     chown dachsroot "${GAVO_ROOT}"
 
-COPY etc/gavo.rc "$GAVO_SETTINGS"
+COPY etc/gavo.rc "$GAVOSETTINGS"
 
 EXPOSE 8080
 
