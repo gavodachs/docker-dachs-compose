@@ -10,7 +10,7 @@ install:
 script:
   # The name of dachs-server container is 'dachs-server'
   - docker cp data/download_arihip.sh dachs-server:/tmp/download.sh
-  - docker exec dachs-server ls -lh /var/gavo
+  - docker exec dachs-server ls -lh /var/gavo/inputs
   - docker exec dachs-server /tmp/download.sh arihip /var/gavo/inputs
   - docker exec dachs-server dachs imp -M 1000 arihip/q.rd
   - docker exec dachs-server dachs test ALL
