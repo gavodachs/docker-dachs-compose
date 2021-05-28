@@ -32,11 +32,6 @@ The [dockerfiles](dockerfiles) in here will setup image families (with their res
 For detailed information on DaCHS itself or Docker, please
 visit their official documentation, [DaCHS/docs][1] or [Docker/docs][2].
 
-> Command-lines running from the _host_ system are prefixed by <b><code>(host)</code></b>;
-> And <b><code>(dock)</code></b> are run from inside the container.
-
-[1]: http://dachs-doc.readthedocs.io
-
 
 # Run
 
@@ -62,6 +57,7 @@ $ docker-compose build
 
 And then proceed to run it, should give you a fresh Dachs suite running in no time.
 
+[1]: http://dachs-doc.readthedocs.io
 [2]: https://docs.docker.com/
 [4]: https://hub.docker.com/repository/docker/gavodachs
 
