@@ -4,7 +4,7 @@ services:
         container_name: dachs-server
         build:
             context: ./dockerfiles/dachs_server
-        image: "dachs-server"
+        image: gavodachs/server
         tty: true
         network_mode: 'bridge'
         ports:
@@ -17,6 +17,6 @@ services:
         container_name: dachs-postgres
         build:
             context: ./dockerfiles/postgres_server
-        image: "dachs-postgres"
+        image: gavodachs/postgres
         tty: true
         network_mode: 'bridge'
