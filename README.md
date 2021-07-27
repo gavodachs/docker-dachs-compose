@@ -17,7 +17,7 @@ You'll find the corresponding images under ['gavodachs'][4] DockerHub organizati
 > If you have already used _DaCHS-on-Docker_ before you may have pulled the images from `chbrandt/dachs` repository,
 > they are still there for your convenience, but slowly moving  to `gavodachs` repos (versions 2+).
 
-[![Build Status](https://travis-ci.org/gavodachs/docker-dachs-compose.svg?branch=master)](https://travis-ci.org/gavodachs/docker-dachs-compose)
+[![Build Status](https://travis-ci.com/gavodachs/docker-dachs-compose.svg?branch=master)](https://travis-ci.com/gavodachs/docker-dachs-compose)
 
 ---
 
